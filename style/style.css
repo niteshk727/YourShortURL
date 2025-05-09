@@ -1,0 +1,20 @@
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+input, .form-control {
+  border-radius: 0.5rem;
+}
+
+button {
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+#qrContainer canvas {
+  margin-top: 1rem;
+}
