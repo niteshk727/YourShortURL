@@ -141,13 +141,6 @@ h1 {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
 }
 
-.animated-word {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Keep the shadow for better visibility */
-}
-
 /* Footer Styling */
 footer {
   width: 100%;
