@@ -9,20 +9,21 @@ function shortenURL() {
     return;
   }
 
-  // Use CleanURI API
-  fetch(`https://cleanuri.com/api/v1/shorten`, {
+  // Use TinyURL API
+  fetch(`https://api.tinyurl.com/create`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Authorization": "Bearer iG0gkLmiP0npXJADQ8C80kjbmBegQKE2ZHRj7WT8yLYVIG4EMlXVGNqD6z39", // Replace with your TinyURL API key
+      "Content-Type": "application/json"
     },
-    body: `url=${encodeURIComponent(url)}`
+    body: JSON.stringify({ url })
   })
   .then(res => res.json())
   .then(data => {
-    if (data.result_url) {
-      shortUrlInput.value = data.result_url;
+    if (data.data && data.data.tiny_url) {
+      shortUrlInput.value = data.data.tiny_url;
       resultDiv.classList.remove("d-none");
-      generateQR(data.result_url);
+      generateQR(data.data.tiny_url);
     } else {
       alert("Error shortening URL.");
     }
