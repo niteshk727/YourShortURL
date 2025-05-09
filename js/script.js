@@ -73,13 +73,27 @@ function generateQR(url) {
 }
 
 function setRandomBackground() {
-  const colors = [
-    "#ff9a9e", "#fad0c4", "#fbc2eb", "#a18cd1", "#fbc2eb", "#fad0c4", "#ff9a9e"
-  ];
-  const randomColors = colors.sort(() => Math.random() - 0.5).slice(0, 3);
-  document.body.style.background = `linear-gradient(45deg, ${randomColors.join(", ")})`;
-  document.body.style.backgroundSize = "300% 300%";
-  document.body.style.animation = "gradientAnimation 10s ease infinite";
+  // Generate random dark colors
+  const getRandomDarkColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      const randomValue = Math.floor(Math.random() * 16);
+      // Ensure the color is dark by limiting brightness (0-8 range for darker shades)
+      color += letters[randomValue < 8 ? randomValue : randomValue - 8];
+    }
+    return color;
+  };
+
+  // Generate three random dark colors for the gradient
+  const color1 = getRandomDarkColor();
+  const color2 = getRandomDarkColor();
+  const color3 = getRandomDarkColor();
+
+  // Apply the gradient to the body
+  document.body.style.background = `linear-gradient(45deg, ${color1}, ${color2}, ${color3})`;
+  document.body.style.backgroundSize = "300% 300%"; // Larger size for smoother animation
+  document.body.style.animation = "gradientAnimation 20s ease infinite"; // Smooth gradient animation
 }
 
 function generateIcons() {

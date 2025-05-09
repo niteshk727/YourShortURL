@@ -1,7 +1,10 @@
 /* Flip Card Styling */
 .flip-card {
-  width: 250px; /* Set a fixed width */
-  height: 250px; /* Set a fixed height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px; /* Fixed width */
+  height: 250px; /* Fixed height */
   perspective: 1000px;
   margin: 1rem auto;
 }
@@ -43,8 +46,12 @@
 
 /* Ensure QR code fits within the card */
 #qrContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 90%; /* Adjust width to fit within the card */
-  height: 90%;
+  height: 90%; /* Adjust height to fit within the card */
+  margin: auto; /* Center the QR code */
 }
 
 #qrCard {
@@ -161,6 +168,39 @@ footer a {
 footer a:hover {
   text-decoration: underline;
   color: #2193b0;
+}
+
+/* Button Styling */
+button {
+  font-size: 1rem; /* Increase font size */
+  padding: 0.6rem 1.2rem; /* Add padding for better visibility */
+  border-radius: 5px; /* Add rounded corners */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+button:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for hover effect */
+}
+
+.btn-outline-light {
+  border-color: #6dd5ed; /* Light blue border */
+  color: #6dd5ed; /* Light blue text */
+}
+
+.btn-outline-light:hover {
+  background-color: #6dd5ed; /* Light blue background */
+  color: white; /* White text */
+}
+
+.btn-outline-primary {
+  border-color: #2193b0; /* Darker blue border */
+  color: #2193b0; /* Darker blue text */
+}
+
+.btn-outline-primary:hover {
+  background-color: #2193b0; /* Darker blue background */
+  color: white; /* White text */
 }
 
 /* Responsive Design */
