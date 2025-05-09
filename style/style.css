@@ -1,6 +1,7 @@
 body {
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: white;
+  animation: gradientAnimation 15s ease infinite;
 }
 
 input, .form-control {
@@ -17,4 +18,16 @@ button:hover {
 
 #qrContainer canvas {
   margin-top: 1rem;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
