@@ -98,17 +98,34 @@ function setRandomBackground() {
 
 function generateIcons() {
   const iconBackground = document.getElementById("iconBackground");
+  iconBackground.innerHTML = ""; // Clear previous icons
+
   const icons = [
-    "🔗", "🌐", "✨", "🚀", "📎", "🔒", "💡", "📱", "💻", "📧", "📂", "📊", "📈", "📉", "🔍", "🖱️", "🖥️", "📷", "🎥", "🎨", "📡", "📞", "📺", "🎵", "🎶", "🎧"
-  ]; // Expanded list of glyphicons
-  for (let i = 0; i < 40; i++) { // Increased the number of icons
+    "😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊", "😋", "😎", "😍", "😘", "🥰", "😗", "😙", "😚", "🙂", "🤗", "🤩", "🤔", "🤨", "😐", "😑", "😶", "🙄", "😏", "😣", "😥", "😮", "🤐", "😯", "😪", "😫", "🥱", "😴", "😌", "😛", "😜", "😝", "🤤", "😒", "😓", "😔", "😕", "🙃", "🤑", "😲", "☹️", "🙁", "😖", "😞", "😟", "😤", "😢", "😭", "😦", "😧", "😨", "😩", "🤯", "😬", "😰", "😱", "🥵", "🥶", "😳", "🤪", "😵", "🥴", "😠", "😡", "🤬", "😷", "🤒", "🤕", "🤢", "🤮", "🤧", "😇", "🥳", "🥺", "🤠", "🤡", "🤥", "🤫", "🤭", "🧐", "🤓"
+  ];
+
+  const ICON_COUNT = 40;
+
+  function spawnIcon() {
     const icon = document.createElement("div");
     icon.className = "icon";
     icon.textContent = icons[Math.floor(Math.random() * icons.length)];
-    icon.style.left = `${Math.random() * 100}vw`; // Random horizontal position
-    icon.style.animationDuration = `${5 + Math.random() * 5}s`; // Random animation duration
-    icon.style.fontSize = `${1 + Math.random() * 2}rem`; // Random font size
+    icon.style.left = `${Math.random() * 100}vw`;
+    icon.style.fontSize = `${1 + Math.random() * 2}rem`;
+    const duration = 5 + Math.random() * 7; // 5-12 seconds
+    icon.style.animationDuration = `${duration}s`;
+
+    // When animation ends, respawn the icon
+    icon.addEventListener('animationend', function () {
+      icon.remove();
+      spawnIcon();
+    });
+
     iconBackground.appendChild(icon);
+  }
+
+  for (let i = 0; i < ICON_COUNT; i++) {
+    setTimeout(spawnIcon, Math.random() * 5000); // Stagger initial spawn
   }
 }
 

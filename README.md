@@ -8,7 +8,7 @@
 
 - ✅ URL shortening using the [TinyURL API](https://tinyurl.com/app/)
 - ✅ Copy to clipboard & paste from clipboard
-- ✅ Stylish animated QR codes with random gradients
+- ✅ QR codes
 - ✅ Flip-card animation for QR code reveal
 - ✅ Floating icon background & dynamic dark theme
 - ✅ Responsive UI built with Bootstrap
@@ -18,7 +18,9 @@
 
 ## 🚀 Demo
 
-![App Preview](https://dummyimage.com/800x400/2c5364/ffffff&text=YourShortURL+Preview)
+<!-- ![App Preview](https://dummyimage.com/800x400/2c5364/ffffff&text=YourShortURL+Preview) -->
+![SS1](data/Looks1.png)
+![SS2](data/Looks1.png)
 
 ---
 
@@ -27,7 +29,7 @@
 - **HTML5 / CSS3 / Bootstrap**
 - **Vanilla JavaScript**
 - **[TinyURL API](https://tinyurl.com/app/dev)**
-- **[qr-code-styling](https://github.com/kozakdenys/qr-code-styling)**
+<!-- - **[qr-code-styling](https://github.com/kozakdenys/qr-code-styling)** -->
 
 ---
 
