@@ -20,7 +20,7 @@
 
 <!-- ![App Preview](https://dummyimage.com/800x400/2c5364/ffffff&text=YourShortURL+Preview) -->
 ![SS1](data/Looks1.png)
-![SS2](data/Looks1.png)
+![SS2](data/Looks2.png)
 
 ---
 
