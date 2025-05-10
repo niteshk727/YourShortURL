@@ -139,6 +139,14 @@ function pasteFromClipboard() {
     });
 }
 
+function redirectURL() {
+  let shortUrl = document.getElementById("shortUrl").value.trim();
+  if (shortUrl && !/^https?:\/\//i.test(shortUrl)) {
+    shortUrl = "https://" + shortUrl;
+  }
+  if (shortUrl) window.open(shortUrl, "_blank");
+}
+
 // Call the function on page load
 setRandomBackground();
 generateIcons();
