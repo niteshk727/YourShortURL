@@ -112,6 +112,16 @@ function generateIcons() {
   }
 }
 
+function pasteFromClipboard() {
+  navigator.clipboard.readText()
+    .then(text => {
+      document.getElementById("urlInput").value = text;
+    })
+    .catch(() => {
+      alert("❌ Unable to read clipboard. Try manually pasting.");
+    });
+}
+
 // Call the function on page load
 setRandomBackground();
 generateIcons();
