@@ -18,7 +18,7 @@
   transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner {
+.flip-card-inner.flipped {
   transform: rotateY(180deg);
 }
 
@@ -49,9 +49,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%; /* Adjust width to fit within the card */
-  height: 90%; /* Adjust height to fit within the card */
-  margin: auto; /* Center the QR code */
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  margin: auto;
+  overflow: hidden;
+}
+
+#qrContainer canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
 }
 
 #qrCard {
@@ -99,7 +110,6 @@ html, body {
   height: 100%;
   margin: 0;
   display: flex;
-  padding: 0;
   flex-direction: column;
 }
 
@@ -109,6 +119,7 @@ body {
   animation: gradientAnimation 15s ease infinite;
   color: white;
   min-height: 100vh;
+  flex: 1 0 auto; /* Allow body to grow and fill space */
 }
 
 @keyframes gradientAnimation {
@@ -126,6 +137,7 @@ body {
   align-items: center; /* Center horizontally */
   padding-top: 0; /* Remove padding initially */
   transition: all 0.5s ease; /* Smooth transition */
+  min-height: calc(100vh - 100px); /* Ensure the container takes up enough space */
 }
 
 /* Move the container up when the result is shown */
@@ -141,16 +153,43 @@ h1 {
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
 }
 
+/* Responsive Text Styling */
+.big-text {
+  font-size: 2.5rem; /* Default size */
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .big-text {
+    font-size: 1.8rem; /* Adjust font size for tablets */
+  }
+
+}
+
+@media (max-width: 480px) {
+  .big-text {
+    font-size: 1.2rem; /* Adjust font size for phones */
+  }
+
+}
+
 /* Footer Styling */
 footer {
+  flex-shrink: 0;
   width: 100%;
-  padding: 1rem 0;
+  padding: 0.5rem 0; /* Reduced padding */
   background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.8rem; /* Reduced font size */
   text-align: center;
   position: relative;
   bottom: 0;
+}
+
+footer p {
+  margin: 0.2rem 0; /* Reduced margin between paragraphs */
 }
 
 footer a {
@@ -194,6 +233,67 @@ button:hover {
 .btn-outline-primary:hover {
   background-color: #2193b0; /* Darker blue background */
   color: white; /* White text */
+}
+
+/* Responsive Input Fields and Buttons */
+.input-group {
+  flex-wrap: wrap; /* Ensure input and buttons stack on smaller screens */
+}
+
+.input-group .form-control {
+  flex: 1 1 auto; /* Allow input to take up available space */
+  min-width: 0; /* Prevent input from overflowing */
+}
+
+.input-group-text {
+  background: transparent;
+  border: none;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.input-group .bi-info-circle {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+button {
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+}
+
+@media (max-width: 768px) {
+  button {
+    font-size: 0.9rem; /* Adjust button size for tablets */
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  button {
+    font-size: 0.8rem; /* Adjust button size for phones */
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Responsive Flip Card */
+.flip-card {
+  width: 250px;
+  height: 250px;
+}
+
+@media (max-width: 768px) {
+  .flip-card {
+    width: 200px; /* Adjust size for tablets */
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flip-card {
+    width: 150px; /* Adjust size for phones */
+    height: 150px;
+  }
 }
 
 /* Responsive Design */
@@ -241,4 +341,43 @@ button:hover {
   footer {
     font-size: 0.7rem; /* Adjust footer font size */
   }
+}
+
+@media (max-width: 767.98px) {
+  #customAliasInputContainer .col-12 + .col-12 {
+    margin-top: 0.5rem;
+  }
+}
+
+/* Form Check Styling */
+.form-check-input {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+}
+
+.form-check-label {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 10px;
+  overflow: hidden;
+  color: black;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body {
+  font-size: 1.2rem;
+}
+
+#modalIcon {
+  display: block;
+  margin: 0 auto;
 }
