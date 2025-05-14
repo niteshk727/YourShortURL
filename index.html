@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YourShortURL</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
-  <link rel="manifest" href="favicon_io/site.webmanifest">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="style/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
-
 <body>
   <div id="iconBackground"></div>
   <div class="container text-center">
@@ -22,102 +15,63 @@
       🔗 Let's shorten your BIIGG URL
     </h1>
     <div class="input-group mb-3 w-100">
-      <input type="url" id="urlInput" class="form-control animate__animated animate__fadeIn"
-        placeholder="Type/Paste your URL here..." aria-label="Enter long URL" />
-      <button class="btn btn-secondary animate__animated animate__fadeInRight" type="button"
-        onclick="pasteFromClipboard()">Paste</button>
+      <input type="url" id="urlInput" class="form-control animate__animated animate__fadeIn" placeholder="Type/Paste your URL here..." aria-label="Enter long URL" />
+      <button class="btn btn-secondary animate__animated animate__fadeInRight" type="button" onclick="pasteFromClipboard()">Paste</button>
     </div>
-
-    <!-- Collapsible Custom Alias Section -->
-    <div class="mb-3">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="customAliasCheckbox" onclick="toggleCustomAlias()" />
-        <label class="form-check-label" for="customAliasCheckbox">
-          Add Custom Name (Optional)
-        </label>
-      </div>
-      <div id="customAliasInputContainer" class="mt-2 d-none">
-        <div class="row justify-content-center">
-          <div class="col-lg-12 col-md-10 col-12">
-            <div class="input-group">
-              <input type="text" id="customAlias" class="form-control" placeholder="Type custom alias" />
-              <span class="input-group-text bg-white border-0">
-                <i class="bi bi-info-circle text-info"
-                   data-bs-toggle="tooltip"
-                   data-bs-html="true"
-                   title="<ul style='margin: 0; padding-left: 1.2rem;'><li>Alias should be unique.</li></ul>"></i>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Always visible Shorten button -->
-    <div class="mb-4">
-      <button class="btn btn-primary w-100" type="button" onclick="shortenURL()">Shorten</button>
-    </div>
-
+<button class="btn btn-primary animate__animated animate__fadeInDown" type="button" onclick="shortenURL()">Shorten</button>
     <div id="result" class="d-none">
       <p class="mb-1">Here’s your shortened URL:</p>
-          <div class="input-group mb-2">
-            <input type="text" id="shortUrl" class="form-control" readonly />
-            <button class="btn btn-outline-light me-2" onclick="copyURL()">Copy</button>
-            <button class="btn btn-outline-primary" onclick="redirectURL()">Go There!</button>
-          </div>
-        </div>
-
-
-      <div id="qrCard" class="flip-card d-none" onclick="toggleFlipCard()">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <p>Flip 🔁 to share QR instead</p>
-          </div>
-          <div class="flip-card-back">
-            <div id="qrContainer"></div>
-            <div class="mt-2">
-              <i id="downloadQR" class="bi bi-download btn btn-link fs-3 text-primary d-none" title="Download QR"></i>
-              <div id="qrSubtitle" class="small text-break mt-2"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="loadingSpinner" class="spinner-border text-primary d-none" role="status">
-        <span class="visually-hidden">Loading...</span>
+      <div class="input-group mb-2">
+        <input type="text" id="shortUrl" class="form-control" readonly />
+        <button class="btn btn-outline-light me-2" onclick="copyURL()">Copy</button>
+        <button class="btn btn-outline-primary" onclick="redirectURL()">Redirect</button>
       </div>
     </div>
 
-    <div id="messageModal" class="modal fade" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 id="modalTitle" class="modal-title"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body text-center">
-            <i id="modalIcon" class="bi"></i>
-            <p id="modalMessage" class="mt-3"></p>
-          </div>
+    <div id="qrCard" class="flip-card d-none">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <p>Tap or click to share QR instead</p>
         </div>
+        <div class="flip-card-back">
+          <div id="qrContainer"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="loadingSpinner" class="spinner-border text-primary d-none" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div id="messageModal" class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="modalTitle" class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i id="modalIcon" class="bi"></i>
+        <p id="modalMessage" class="mt-3"></p>
       </div>
     </div>
   </div>
-  <footer class="animate__animated animate__fadeIn">
+</div>
+
+  <footer>
     <p>
       Made for you 😃 by <a href="https://github.com/niteshk727" target="_blank" class="text-light">NK</a>
     </p>
     <p>&copy; 2025 YourShortURL. All rights reserved.</p>
     <p>
-      <a href="https://github.com/niteshk727/YourShortURL#readme" class="text-info" target="_blank">Read About this
-        site</a>
+      <a href="https://github.com/niteshk727/YourShortURL#readme" class="text-info" target="_blank">Read About this site</a>
     </p>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@latest/lib/qr-code-styling.js"></script>
   <script src="js/script.js"></script>
 </body>
-
 </html>
