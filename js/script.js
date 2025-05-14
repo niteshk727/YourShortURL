@@ -24,6 +24,7 @@ function setRandomBackground() {
 
 function shortenURL() {
   const url = document.getElementById("urlInput").value.trim();
+  const customAlias = document.getElementById("customAlias").value.trim();
   const resultDiv = document.getElementById("result");
   const shortUrlInput = document.getElementById("shortUrl");
   const qrContainer = document.getElementById("qrContainer");
@@ -38,6 +39,11 @@ function shortenURL() {
   // Show the spinner
   loadingSpinner.classList.remove("d-none");
 
+  // Prepare the request body
+  const requestBody = { url };
+  if (customAlias) {
+    requestBody.alias = customAlias; // Add alias if provided
+  }
   // Use TinyURL API
   fetch(`https://api.tinyurl.com/create`, {
     method: "POST",
@@ -45,10 +51,10 @@ function shortenURL() {
       "Authorization": "Bearer iG0gkLmiP0npXJADQ8C80kjbmBegQKE2ZHRj7WT8yLYVIG4EMlXVGNqD6z39", // Replace with your TinyURL API key
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ url })
+    body: JSON.stringify(requestBody)
   })
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       if (data.data && data.data.tiny_url) {
         shortUrlInput.value = data.data.tiny_url;
         resultDiv.classList.remove("d-none");
@@ -264,6 +270,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// Initialize Bootstrap tooltips
+document.addEventListener("DOMContentLoaded", () => {
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.forEach((tooltipTriggerEl) => {
+    new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+});
+
+function toggleCustomAlias() {
+  const customAliasInputContainer = document.getElementById("customAliasInputContainer");
+  const customAliasCheckbox = document.getElementById("customAliasCheckbox");
+
+  if (customAliasCheckbox.checked) {
+    customAliasInputContainer.classList.remove("d-none");
+  } else {
+    customAliasInputContainer.classList.add("d-none");
+  }
+}
 
 // Call the function on page load
 setRandomBackground();
