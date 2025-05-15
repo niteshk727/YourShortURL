@@ -1,3 +1,5 @@
+let lastShortUrl = ""; // Add this at the top of your script.js
+
 // Utility: Generate a random dark color
 function getRandomDarkColor() {
   const letters = "0123456789ABCDEF";
@@ -25,6 +27,7 @@ function setRandomBackground() {
 function shortenURL() {
   const url = document.getElementById("urlInput").value.trim();
   const customAlias = document.getElementById("customAlias").value.trim();
+  const customAliasCheckbox = document.getElementById("customAliasCheckbox");
   const resultDiv = document.getElementById("result");
   const shortUrlInput = document.getElementById("shortUrl");
   const qrContainer = document.getElementById("qrContainer");
@@ -33,6 +36,12 @@ function shortenURL() {
 
   if (!url) {
     showError("Please enter a URL.", 0);
+    return;
+  }
+
+  // Check if custom alias checkbox is checked but no alias provided
+  if (customAliasCheckbox && customAliasCheckbox.checked && !customAlias) {
+    showError("Please provide a custom alias.", 0);
     return;
   }
 
@@ -107,6 +116,7 @@ function copyURL() {
 function generateQR(url) {
   const qrContainer = document.getElementById("qrContainer");
   const qrCard = document.getElementById("qrCard");
+  const downloadBtn = document.getElementById("downloadQRBtn");
 
   // Clear previous QR code
   qrContainer.innerHTML = "";
@@ -121,51 +131,69 @@ function generateQR(url) {
   );
   if (window.innerWidth < 480) size = Math.min(window.innerWidth * 0.85, 220);
 
-  // Add your logo image path here (e.g., favicon or logo)
-  const logoUrl = "favicon_io/apple-touch-icon.png"; // or "favicon_io/apple-touch-icon.png" or your logo path
-  const dotColor = getRandomDarkColor(); // Define the dot color here
-  const qrCode = new QRCodeStyling({
-    width: size,
-    height: size,
-    type: "canvas",
-    data: url,
-    image: logoUrl, // <-- This adds the image to the center
-    dotsOptions: {
-      color: dotColor, // Yes, you can call it directly here if it's in scope
-      type: "rounded",
-      gradient: {
-        type: "radial",
-        rotation: 0,
-        colorStops: [
-          { offset: 0, color: dotColor },
-          { offset: 1, color: dotColor }
-        ]
-      }
-    },
-    backgroundOptions: {
-      color: "#ffffff"
-    },
-    imageOptions: {
-      crossOrigin: "anonymous",
-      margin: 10, // space around the image
-      imageSize: 0.25 // 25% of QR size; adjust as needed
-    },
-    cornerSquareOptions: {
-      color: dotColor,
-      type: "extra-rounded"
-    },
-    cornerDotOptions: {
-      color: dotColor,
-      type: "extra-rounded"
-    },
-    // qrOptions: {
-    //   typeNumber: 0,
-    //   mode: "Byte",
-    //   errorCorrectionLevel: "H"
-    // }
-  });
+  const logoUrl = "favicon_io/apple-touch-icon.png";
+  const dotColor = getRandomDarkColor();
 
-  qrCode.append(qrContainer);
+  function renderQRCode(withLogo) {
+    const qrOptions = {
+      width: size,
+      height: size,
+      type: "canvas",
+      data: url,
+      dotsOptions: {
+        color: dotColor,
+        type: "rounded",
+        gradient: {
+          type: "radial",
+          rotation: Math.PI / 5,
+          colorStops: [
+            { offset: 0, color: dotColor },
+            { offset: 1, color: dotColor }
+          ]
+        }
+      },
+      backgroundOptions: {
+        color: "#ffffff"
+      },
+      imageOptions: {
+        crossOrigin: "anonymous",
+        margin: 10,
+        imageSize: 0.20
+      },
+      cornerSquareOptions: {
+        color: dotColor,
+        type: "dot"
+      },
+      cornerDotOptions: {
+        color: dotColor,
+        type: "dot"
+      }
+    };
+    if (withLogo) {
+      qrOptions.image = logoUrl;
+    }
+    const qrCode = new QRCodeStyling(qrOptions);
+    qrCode.append(qrContainer);
+
+    // Show the download button
+    if (downloadBtn) downloadBtn.style.display = "inline-block";
+
+    // Store the last short URL for filename
+    lastShortUrl = url;
+    // Save qrCode instance for download
+    downloadBtn.qrCodeInstance = qrCode;
+  }
+
+  // Try to load the logo image first
+  const img = new window.Image();
+  img.crossOrigin = "anonymous";
+  img.onload = function () {
+    renderQRCode(true);
+  };
+  img.onerror = function () {
+    renderQRCode(false);
+  };
+  img.src = logoUrl;
 }
 
 function generateIcons() {
@@ -289,6 +317,92 @@ function toggleCustomAlias() {
     customAliasInputContainer.classList.add("d-none");
   }
 }
+
+// Add event listener for download button
+document.addEventListener("DOMContentLoaded", function () {
+  const downloadBtn = document.getElementById("downloadQRBtn");
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", async function () {
+      const qrCanvas = document.querySelector("#qrContainer canvas");
+      if (!qrCanvas) return;
+
+      // Set heights and border
+      const brandHeight = 50; // Branding area at the top
+      const urlHeight = 36;   // URL area at the bottom
+      const borderSize = 5;   // Border thickness
+      const padding = 20;     // Padding around QR code
+
+      // Calculate final canvas size (equal padding on all sides)
+      const width = qrCanvas.width + padding * 2;
+      const height = qrCanvas.height + brandHeight + urlHeight + padding * 2;
+
+      // Create final canvas
+      const finalCanvas = document.createElement("canvas");
+      finalCanvas.width = width;
+      finalCanvas.height = height;
+      const ctx = finalCanvas.getContext("2d");
+
+      // Fill background white
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw branding text at the top, with padding
+      ctx.fillStyle = "#222";
+      ctx.font = "bold 20px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText(
+        "© YourShortURL By NK",
+        width / 2,
+        padding + 12
+      );
+
+      // Draw QR code in the center area with padding
+      const qrX = padding;
+      const qrY = brandHeight + padding;
+      ctx.drawImage(
+        qrCanvas,
+        qrX,
+        qrY,
+        qrCanvas.width,
+        qrCanvas.height
+      );
+
+      // Draw border rectangle for QR code
+      ctx.save();
+      ctx.strokeStyle = "#222";
+      ctx.lineWidth = borderSize;
+      ctx.strokeRect(
+        qrX - borderSize / 2,
+        qrY - borderSize / 2,
+        qrCanvas.width + borderSize,
+        qrCanvas.height + borderSize
+      );
+      ctx.restore();
+
+      // Draw the tinyurl at the bottom
+      ctx.fillStyle = "#222";
+      ctx.font = "16px Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      let urlText = lastShortUrl || "";
+      ctx.fillText(urlText, width / 2, height - padding);
+
+      // Get filename from lastShortUrl
+      let filename = "qr.png";
+      if (lastShortUrl) {
+        const parts = lastShortUrl.split("/");
+        filename = (parts[parts.length - 1] || "qr") + ".png";
+      }
+
+      // Download the image
+      const link = document.createElement("a");
+      link.href = finalCanvas.toDataURL("image/png");
+      link.download = filename;
+      link.click();
+    });
+  }
+});
 
 // Call the function on page load
 setRandomBackground();
