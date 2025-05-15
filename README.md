@@ -21,6 +21,7 @@
 - 🎯 **Custom URL Alias:** Users can now create a personalized, unique alias for their shortened links.
 - 🎨 **Branded QR Codes:** Stylish QR codes with your site’s logo in the center and custom colors for a modern, branded look.
 - 📱 **Optimized Footer:** Footer space has been reduced for a cleaner interface and more usable screen area, especially on mobile.
+- ⬇️ **Download QR Code:** Download the generated QR code as a PNG image, complete with branding and your shortened URL.
 
 ---
 
