@@ -18,7 +18,8 @@
   transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner {
+.flip-card:hover .flip-card-inner,
+.flip-card.flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
 
@@ -42,16 +43,28 @@
 .flip-card-back {
   background: #2c5364;
   transform: rotateY(180deg);
+  position: relative;
+  min-height: 320px; /* ensure enough space for QR and button */
 }
 
 /* Ensure QR code fits within the card */
 #qrContainer {
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 90%; /* Adjust width to fit within the card */
-  height: 90%; /* Adjust height to fit within the card */
-  margin: auto; /* Center the QR code */
+  justify-content: center;
+}
+
+#qrContainer > canvas,
+#qrContainer > svg {
+  max-width: 90%;
+  max-height: 90%;
+  width: auto !important;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 #qrCard {
@@ -62,6 +75,26 @@
   position: relative; /* Ensure it stays in the flow */
   top: 0;
   transform: translateY(0); /* Reset any offset */
+  margin-bottom: 4rem; /* Add more space below the card */
+}
+
+#downloadQRBtn {
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+  border-radius: 50%;
+  display: none;
+  min-width: 40px;
+  min-height: 40px;
+  background-color: whitesmoke;
+}
+
+#downloadQRBtn i {
+  margin-right: 0;
 }
 
 /* Background Icons */
@@ -144,13 +177,18 @@ h1 {
 /* Footer Styling */
 footer {
   width: 100%;
-  padding: 1rem 0;
-  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  padding: 0.5rem 0;      /* Reduced padding */
+  background: rgba(0, 0, 0, 0.7);
   color: white;
-  font-size: 0.9rem;
+  font-size: 0.8rem;      /* Smaller font size */
   text-align: center;
   position: relative;
   bottom: 0;
+  margin-top: 1rem;       /* Add a little space above */
+}
+
+footer p {
+  margin: 0.2rem 0;       /* Reduce space between lines */
 }
 
 footer a {
@@ -220,14 +258,28 @@ button:hover {
   }
 }
 
+@media (max-width: 767.98px) {
+  #customAliasInputContainer .col-12 + .col-12 {
+    margin-top: 0.5rem;
+  }
+}
+
 @media (max-width: 480px) {
   h1 {
     font-size: 1.5rem; /* Further reduce font size for phones */
   }
 
   .flip-card {
-    width: 150px; /* Adjust card size for phones */
-    height: 150px;
+    width: 90vw;
+    height: 90vw;
+    min-width: 140px;
+    min-height: 140px;
+    max-width: 95vw;
+    max-height: 95vw;
+  }
+
+  #qrCard {
+    margin-bottom: 6rem; /* More space for footer on mobile */
   }
 
   .icon {
@@ -241,4 +293,54 @@ button:hover {
   footer {
     font-size: 0.7rem; /* Adjust footer font size */
   }
+}
+
+#modalMessage {
+  overflow: auto; /* Enable scroll if needed */
+  color: black;
+}
+
+.modal-content {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body {
+  font-size: 1.2rem;
+}
+
+#modalIcon {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Custom Tooltip Styling */
+.custom-tooltip .tooltip-inner .tooltip-list {
+  padding-left: 1.5em;
+  margin: 0;
+  list-style-position: inside;
+}
+.custom-tooltip .tooltip-inner ol {
+  margin: 0;
+  padding-left: 1.5em;
+}
+.custom-tooltip .tooltip-inner li {
+  margin-bottom: 0.2em;
+}
+
+/* Custom tooltip list indentation */
+.custom-tooltip .tooltip-inner ol,
+.custom-tooltip .tooltip-inner .tooltip-list {
+  padding-left: 2em !important;
+  margin: 0 !important;
+  list-style: decimal inside !important;
+}
+
+.custom-tooltip .tooltip-inner li {
+  margin-bottom: 0.2em;
+  text-align: left;
 }
