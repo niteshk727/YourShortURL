@@ -6,6 +6,15 @@
 
 ## ✨ Features
 
+### 🚀 New in v2.0.0
+
+- 🎯 **Custom URL Alias:** Users can now create a personalized, unique alias for their shortened links.
+- 🎨 **Branded QR Codes:** Stylish QR codes with your site’s logo in the center and custom colors for a modern, branded look.
+- 📱 **Optimized Footer:** Footer space has been reduced for a cleaner interface and more usable screen area, especially on mobile.
+- ⬇️ **Download QR Code:** Download the generated QR code as a PNG image, complete with branding and your shortened URL.
+
+### 🏷️ Features from v1.0.0
+
 - ✅ URL shortening using the [TinyURL API](https://tinyurl.com/app/)
 - ✅ Copy to clipboard & paste from clipboard
 - ✅ QR codes
@@ -28,8 +37,7 @@
 ## 🚀 Demo
 
 <!-- ![App Preview](https://dummyimage.com/800x400/2c5364/ffffff&text=YourShortURL+Preview) -->
-![SS1](data/Looks1.png)
-![SS2](data/Looks2.png)
+![SS1](data/Looks3_2_0_0.png)
 
 ---
 
@@ -48,3 +56,4 @@
 git clone https://github.com/niteshk727/yourshorturl.git
 cd yourshorturl
 # Just open index.html in a browser
+```
